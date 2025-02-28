@@ -1,0 +1,52 @@
+services:
+  app:
+    depends_on:
+      - db
+      - mssqltools
+    command: bash -c "/usr/wait-for-it.sh --timeout=0 db:1433 && npm run dev"
+    build: .
+    container_name: lumini_backend
+    ports:
+      - 4712:9080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - CONNECTION_STRING=${CONNECTION_STRING}
+      - ASPNETCORE_URLS=http://[::]:8080
+    networks:
+      - lumini-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1434:1433"  # A porta 1434 no host mapeia para 1433 no container
+    environment:
+      MSSQL_PID: "Developer"
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      CONNECTION_STRING: ${CONNECTION_STRING}
+    networks:
+      - lumini-network
+
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - db
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    volumes:
+     - ./scripts/db_creation.sql:/tmp/db_creation.sql
+     - ./scripts/migration.sh:/tmp/migration.sh
+    command:
+       - /bin/bash
+       - /tmp/migration.sh
+       - bash -c "/usr/wait-for-it.sh --timeout=0 db:1433 && npm run dev"
+    networks:
+      - lumini-network
+
+networks:
+  lumini-network:
+    name: lumini-network
+    driver: bridge
+
+volumes:
+  db-data:

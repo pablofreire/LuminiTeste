@@ -1,0 +1,31 @@
+{
+  "profiles": {
+    "LuminiTeste.Api": {
+      "commandName": "Project",
+      "launchUrl": "docs",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "TITLE_MSG": "Sistema de Vendas",
+        "CONNECTION_STRING": "Data Source=localhost,1434;Initial Catalog=DB_LUMINI_TESTE;User Id=sa;Password=1234@ffAAAA;TrustServerCertificate=True"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CONNECTION_STRING": "Data Source=localhost,1434;Initial Catalog=DB_LUMINI_TESTE;User Id=sa;Password=1234@ffAAAA;TrustServerCertificate=True"
+      }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:62375/",
+      "sslPort": 44363
+    }
+  }
+}
