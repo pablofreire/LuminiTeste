@@ -11,7 +11,7 @@
 4. Testes unitários com XUnit e Nsubstitute para mock.
 
 ## Swagger
-localhost:4702/docs
+localhost:4712/docs
 
 ## Executando localmente
 1. Executar compose
